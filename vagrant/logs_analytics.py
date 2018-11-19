@@ -39,7 +39,26 @@ def answer_q1():
 
 def answer_q2():
     """Who are the most popular article authors of all time?"""
-    pass
+
+    with psycopg2.connect(database=DBNAME) as db:
+        with db.cursor() as c:
+            c.execute('''
+                        SELECT authors.name, count(authors.name) as count
+                        FROM articles, authors, log
+                        WHERE CONCAT('/article/', articles.slug) = log.path AND authors.id = articles.author
+                        GROUP BY authors.name
+                        ORDER BY count desc;
+            ''')
+
+            print("-" * 80)
+            print('1) Below are the most popular article authors of all time:')
+            print("-" * 80)
+
+            results = c.fetchall()
+            for result in results:
+                print('{} - {} views'.format(result[0], result[1]))
+
+            print()
 
 ###############################################################################
 
