@@ -1,4 +1,4 @@
-fullstack-nanodegree-vm
+Project: Logs Analytics
 =============
 
-Common code for the Relational Databases and Full Stack Fundamentals courses
+Part of Udacity's Full Stack Web Developer Nanodegree Program
