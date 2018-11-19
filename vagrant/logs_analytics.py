@@ -15,38 +15,37 @@ DBNAME = "news"
 def answer_q1():
     """What are the most popular three articles of all time?"""
 
-    print('Q1---------------------------------------------------------------')
-    print('Below are the three most popular articles of all time:')
-    print('1. ')
-    print('2. ')
-    print('3. ')
-    print()
+    with psycopg2.connect(database=DBNAME) as db:
+        with db.cursor() as c:
+            c.execute('''
+                        SELECT articles.title, count(*) as count
+                        FROM articles, log
+                        WHERE CONCAT('/article/', articles.slug) = log.path
+                        GROUP BY articles.title
+                        ORDER BY count desc;
+            ''')
+
+            print("-" * 80)
+            print('1) Below are the three most popular articles of all time:')
+            print("-" * 80)
+
+            results = c.fetchmany(3)
+            for result in results:
+                print('"{}" - {} views'.format(result[0], result[1]))
+
+            print()
 
 ###############################################################################
 
 def answer_q2():
     """Who are the most popular article authors of all time?"""
-
-    print('Q2---------------------------------------------------------------')
-    print('Below are the most popular article authors of all time:')
-    print('1. ')
-    print('2. ')
-    print('3. ')
-    print('4. ')
-    print()
+    pass
 
 ###############################################################################
 
 def answer_q3():
     """On which days did more than 1% of requests lead to errors?"""
-
-    print('Q3---------------------------------------------------------------')
-    print(r'On these days more than 1% of requests led to errors:')
-    print('1. ')
-    print('2. ')
-    print('3. ')
-    print('4. ')
-    print()
+    pass
 
 ###############################################################################
 
