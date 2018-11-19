@@ -9,3 +9,5 @@ We want to answer the following 3 questions from the database:
 - What are the most popular three articles of all time?
 - Who are the most popular article authors of all time?
 - On which days did more than 1% of requests lead to errors?
+
+To get the answers run ```python3 logs_analytics.py```
