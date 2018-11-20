@@ -12,6 +12,30 @@ The ```log_analytics.py``` script answers the following 3 questions from the dat
 
 To get the answers run ```python3 logs_analytics.py```
 
+Tables in the Database
+----------------------
+**Articles**
+- author: integer
+- title: text
+- slug: text
+- lead: text
+- body: text
+- time: timestamp with time zone
+- id: integer
+
+**Authors**
+- name: text
+- bio: text
+- id: integer
+
+**Log**
+- path: text
+- ip: inet
+- method: text
+- status: text
+- time: timestamp with time zone
+- id: integer
+
 Output
 ------
 
