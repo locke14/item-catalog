@@ -1,54 +1,11 @@
-Project: Logs Analytics
-=============
+Project: Product Catalog
+========================
 
-The goal of this project is to create a reporting tool that prints out reports (in plain text) based on the data in this [database](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip).
+The goal of this project is to develop an application that provides a list of items within a variety of categories as well as provide a user registration and authentication system. Registered users will have the ability to post, edit and delete their own items.
 
-The code is meant to be run in a ```vagrant``` virtual machine. To load the data, ```cd``` into the ```vagrant``` directory with the ```newsdata.sql``` file and run the command ```psql -d news -f newsdata.sql``` to setup the database.
-
-The ```log_analytics.py``` script answers the following 3 questions from the database:
-- What are the most popular three articles of all time?
-- Who are the most popular article authors of all time?
-- On which days did more than 1% of requests lead to errors?
-
-To get the answers run ```python3 logs_analytics.py```
-
-Tables in the Database
-----------------------
-**Articles**
-- author: integer
-- title: text
-- slug: text
-- lead: text
-- body: text
-- time: timestamp with time zone
-- id: integer
-
-**Authors**
-- name: text
-- bio: text
-- id: integer
-
-**Log**
-- path: text
-- ip: inet
-- method: text
-- status: text
-- time: timestamp with time zone
-- id: integer
-
-Output
-------
-
-**1) Below are the three most popular articles of all time:**
-- "Candidate is jerk, alleges rival" - 338647 views
-- "Bears love berries, alleges bear" - 253801 views
-- "Bad things gone, say good people" - 170098 views
-
-**2) Below are the most popular article authors of all time:**
-- Ursula La Multa - 507594 views
-- Rudolf von Treppenwitz - 423457 views
-- Anonymous Contributor - 170098 views
-- Markoff Chaney - 84557 views
-
-**3) Below are days where > 1% requests lead to errors:**
-- July 17, 2016 - 2.26% errors
+How to run the application?
+----------------------------
+- Install Vagrant and VirtualBox
+- Launch the Vagrant VM (vagrant up)
+- Run the application within the VM (python /vagrant/catalog/application.py)
+- Access the application by visiting http://localhost:8000 locally
