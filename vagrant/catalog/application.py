@@ -23,14 +23,55 @@ session = DBSession()
 
 
 @app.route('/')
-def home():
-    categories = session.query(Product).all()
+@app.route('/products/')
+def all_products():
+    products = session.query(Product).all()
+    output = ''
+    for i in products:
+        output += i.name
+        output += '</br>'
+        output += str(i.id)
+        output += '</br>'
+    return output
+
+###############################################################################
+
+
+@app.route('/products/<int:product_id>/')
+def view_product(product_id):
+    print(product_id)
+    products = session.query(Product).filter_by(id=product_id).all()
+    print(products)
+    output = ''
+    for i in products:
+        output += i.name
+        output += '</br>'
+        output += i.description
+    return output
+
+###############################################################################
+
+
+@app.route('/categories/')
+def all_categories():
+    categories = session.query(Category).all()
     output = ''
     for i in categories:
         output += i.name
         output += '</br>'
     return output
 
+###############################################################################
+
+
+@app.route('/categories/<int:category_id>/')
+def view_category(category_id):
+    products = session.query(Product).filter_by(category_id=category_id).all()
+    output = ''
+    for i in products:
+        output += i.name
+        output += '</br>'
+    return output
 
 ###############################################################################
 
