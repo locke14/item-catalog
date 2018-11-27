@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <h1>All Categories</h1>
+        {% for category in categories %}
+            <div>
+                <h2>Name</h2>
+                <p>{{category.name}}</p>
+                <h2>Id</h2>
+                <p>{{category.id}}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    </body>
+</html>

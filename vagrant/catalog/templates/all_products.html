@@ -1,0 +1,18 @@
+<html>
+    <body>
+        <h1>All Products</h1>
+        {% for product in products %}
+            <div>
+                <h2>Name</h2>
+                <p>{{product.name}}</p>
+                <h2>Description</h2>
+                <p>{{product.description}}</p>
+                <h2>Id</h2>
+                <p>{{product.id}}</p>
+                <h2>Category Id</h2>
+                <p>{{product.category_id}}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    </body>
+</html>

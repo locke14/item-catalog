@@ -4,7 +4,7 @@
 # Product Catalog Application
 ###############################################################################
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Product
@@ -28,13 +28,7 @@ session = DBSession()
 @app.route('/products/')
 def all_products():
     products = session.query(Product).all()
-    output = ''
-    for i in products:
-        output += i.name
-        output += '</br>'
-        output += str(i.id)
-        output += '</br>'
-    return output
+    return render_template('all_products.html', products=products)
 
 
 ###############################################################################
@@ -42,14 +36,8 @@ def all_products():
 
 @app.route('/products/<int:product_id>/')
 def view_product(product_id):
-    products = session.query(Product).filter_by(id=product_id).all()
-    print(products)
-    output = ''
-    for i in products:
-        output += i.name
-        output += '</br>'
-        output += i.description
-    return output
+    product = session.query(Product).filter_by(id=product_id).one()
+    return render_template('view_product.html', product=product)
 
 ###############################################################################
 
@@ -57,11 +45,7 @@ def view_product(product_id):
 @app.route('/categories/')
 def all_categories():
     categories = session.query(Category).all()
-    output = ''
-    for i in categories:
-        output += i.name
-        output += '</br>'
-    return output
+    return render_template('all_categories.html', categories=categories)
 
 ###############################################################################
 
@@ -69,11 +53,8 @@ def all_categories():
 @app.route('/categories/<int:category_id>/')
 def view_category(category_id):
     products = session.query(Product).filter_by(category_id=category_id).all()
-    output = ''
-    for i in products:
-        output += i.name
-        output += '</br>'
-    return output
+    return render_template('view_category.html',
+                           category_id=category_id, products=products)
 
 ###############################################################################
 # API End points
@@ -108,7 +89,6 @@ def all_categories_api():
 def view_category_api(category_id):
     products = session.query(Product).filter_by(category_id=category_id).all()
     return jsonify(Products=[i.serialize for i in products])
-
 
 ###############################################################################
 
