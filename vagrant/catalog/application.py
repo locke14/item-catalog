@@ -24,7 +24,13 @@ session = DBSession()
 
 @app.route('/')
 def home():
-    return "This is the home page"
+    categories = session.query(Product).all()
+    output = ''
+    for i in categories:
+        output += i.name
+        output += '</br>'
+    return output
+
 
 ###############################################################################
 
