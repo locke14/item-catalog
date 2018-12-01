@@ -1,15 +1,33 @@
-<html>
-    <body>
-        <h1>Product</h1>
-        <div>
-            <h2>Name</h2>
-            <p>{{product.name}}</p>
-            <h2>Description</h2>
-            <p>{{product.description}}</p>
-            <h2>Id</h2>
-            <p>{{product.id}}</p>
-            <h2>Category Id</h2>
-            <p>{{product.category_id}}</p>
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mdl-grid">
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__title">
+            <h4 class="mdl-card__title-text">
+                {{product.name}}
+            </h4>
         </div>
-    </body>
-</html>
+        <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
+            <h4>
+                Category: {{product.category_id}}
+            </h4>
+        </div>
+        <div class="mdl-card__supporting-text">
+            {{product.description}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Edit
+            </a>
+        </div>
+        <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">share</i>
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

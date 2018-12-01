@@ -43,12 +43,12 @@ def clear_db():
 def populate_db():
 
     for c in range(NUM_CATEGORIES):
-        category = Category(name=CATEGORY_NAME.format(c))
+        category = Category(name=CATEGORY_NAME.format(c + 1))
         session.add(category)
         session.commit()
 
         for p in range(NUM_PRODUCTS_PER_CATEGORY):
-            name = PRODUCT_NAME.format(p, c)
+            name = PRODUCT_NAME.format(p + 1, c + 1)
             description = get_sentences(PRODUCT_DESCRIPTION_NUM_SENTENCES)
             product = Product(name=name,
                               description='. '.join(description),

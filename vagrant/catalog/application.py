@@ -25,6 +25,13 @@ session = DBSession()
 
 
 @app.route('/')
+def home():
+    products = session.query(Product).all()
+    return render_template('all_products.html', products=products)
+
+###############################################################################
+
+
 @app.route('/products/')
 def all_products():
     products = session.query(Product).all()
