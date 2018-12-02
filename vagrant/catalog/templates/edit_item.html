@@ -5,36 +5,39 @@
 <form action="#" method='post'>
     <div class="mdl-grid">
         <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-            <input type='text'
-                   size='30'
-                   name='name'
-                   class="mdl-card__title mdl-cell--middle"
-                   placeholder='{{item.name}}'
-            >
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--middle">
+                <input class="mdl-textfield__input"
+                       type="text"
+                       name="name"
+                       id="edit-item-name">
+                <label class="mdl-textfield__label"
+                       for="edit-item-name">
+                        {{item.name}}
+                </label>
+            </div>
             <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
-                <h4>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="{{url_for('view_category', category_id=item.category_id)}}">
                     Category Name: {{item.category.name}}
-                </h4>
+                </a>
             </div>
             <textarea rows='20'
                       cols='80'
                       name='description'
-                      class="mdl-card__supporting-text mdl-cell--middle"
-            >
+                      class="mdl-card__supporting-text mdl-cell--middle">
                 {{item.description}}
             </textarea>
             <div class="mdl-card__actions mdl-card--border">
                 <input type='submit'
-                   value='Edit'
-                   class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                   value='Save'
+                   class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                 <input type='reset'
                    value='Reset'
-                   class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-            </div>
-            <div class="mdl-card__menu">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                   class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">delete</i>
-                </button>
+                    Delete
+                </a>
             </div>
         </div>
     </div>

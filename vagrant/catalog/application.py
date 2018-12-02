@@ -52,10 +52,17 @@ def view_item(item_id):
 @app.route('/items/<int:item_id>/edit/', methods=['GET', 'POST'])
 def edit_item(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
+
     if request.method == 'POST':
         if request.form['name']:
             item.name = request.form['name']
-            return redirect(url_for('view_item', item_id=item_id))
+        if request.form['description']:
+            item.description = request.form['description']
+
+        session.add(item)
+        session.commit()
+
+        return redirect(url_for('view_item', item_id=item_id))
     else:
         return render_template('edit_item.html', item=item)
 
@@ -73,9 +80,10 @@ def all_categories():
 
 @app.route('/categories/<int:category_id>/')
 def view_category(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
     return render_template('view_category.html',
-                           category_id=category_id, items=items)
+                           category_name=category.name, items=items)
 
 ###############################################################################
 # API End points
@@ -85,7 +93,7 @@ def view_category(category_id):
 @app.route('/api/items/')
 def all_items_api():
     items = session.query(Item).all()
-    return jsonify(Products=[i.serialize for i in items])
+    return jsonify(Items=[i.serialize for i in items])
 
 ###############################################################################
 
@@ -93,7 +101,7 @@ def all_items_api():
 @app.route('/api/items/<int:item_id>/')
 def view_item_api(item_id):
     items = session.query(Item).filter_by(id=item_id).all()
-    return jsonify(Products=[i.serialize for i in items])
+    return jsonify(Items=[i.serialize for i in items])
 
 ###############################################################################
 
@@ -101,7 +109,7 @@ def view_item_api(item_id):
 @app.route('/api/categories/')
 def all_categories_api():
     categories = session.query(Category).all()
-    return jsonify(Products=[i.serialize for i in categories])
+    return jsonify(Items=[i.serialize for i in categories])
 
 ###############################################################################
 
@@ -109,7 +117,7 @@ def all_categories_api():
 @app.route('/api/categories/<int:category_id>/')
 def view_category_api(category_id):
     items = session.query(Item).filter_by(category_id=category_id).all()
-    return jsonify(Products=[i.serialize for i in items])
+    return jsonify(Items=[i.serialize for i in items])
 
 ###############################################################################
 

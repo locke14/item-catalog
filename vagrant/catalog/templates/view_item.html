@@ -4,28 +4,30 @@
 
 <div class="mdl-grid">
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
-        <div class="mdl-card__title">
-            <h4 class="mdl-card__title-text">
+        <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
+            <div class="mdl-card__title-text">
                 {{item.name}}
-            </h4>
+            </div>
         </div>
         <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
-            <h4>
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('view_category', category_id=item.category_id)}}">
                 Category Name: {{item.category.name}}
-            </h4>
+            </a>
         </div>
         <div class="mdl-card__supporting-text">
             {{item.description}}
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('edit_item', item_id=item.id)}}">
+                <i class="material-icons">edit</i>
                 Edit
             </a>
-        </div>
-        <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                <i class="material-icons">share</i>
-            </button>
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">delete</i>
+                Delete
+            </a>
         </div>
     </div>
 </div>

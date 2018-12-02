@@ -3,35 +3,52 @@
 {% block content %}
 
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-card--expand mdl-cell--middle">
-        <h3>All Items of Category {{category_id}}</h3>
+
+    <div class="mdl-card mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
+            <div class="mdl-card__title-text">
+                All Items of {{category_name}}
+            </div>
+        </div>
+        <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
+            Number of Items: {{items|length}}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">add</i>
+                Add a New Item
+            </a>
+        </div>
     </div>
+
     {% for item in items %}
 
-    <div class="mdl-cell mdl-cell--4-col">
-        <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
-                <h4 class="mdl-card__title-text">
+                <div class="mdl-card__title-text">
                     {{item.name}}
-                </h4>
+                </div>
             </div>
             <div class="mdl-card__supporting-text">
                 {{item.short_description}}
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
                     href="{{url_for('view_item', item_id=item.id)}}">
-                View
+                    <i class="material-icons">details</i>
+                    View
                 </a>
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Edit
+                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+                   href="{{url_for('edit_item', item_id=item.id)}}">
+                    <i class="material-icons">edit</i>
+                    Edit
                 </a>
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Delete
+                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">delete</i>
+                    Delete
                 </a>
             </div>
         </div>
-    </div>
 
     {% endfor %}
 </div>
