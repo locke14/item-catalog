@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 ###############################################################################
-# Product Catalog Database Setup
+# Item Catalog Database Setup
 ###############################################################################
 
 
@@ -31,8 +31,8 @@ class Category(Base):
 ###############################################################################
 
 
-class Product(Base):
-    __tablename__ = 'product'
+class Item(Base):
+    __tablename__ = 'item'
 
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
@@ -56,5 +56,5 @@ class Product(Base):
 ###############################################################################
 
 
-engine = create_engine('sqlite:///productcatalog.db')
+engine = create_engine('sqlite:///itemcatalog.db')
 Base.metadata.create_all(engine)

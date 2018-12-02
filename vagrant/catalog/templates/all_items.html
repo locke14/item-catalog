@@ -4,29 +4,29 @@
 
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-card--expand mdl-cell--middle">
-        <h3>All Products</h3>
+        <h3>All Items</h3>
     </div>
-    {% for product in products %}
+    {% for item in items %}
 
     <div class="mdl-cell mdl-cell--4-col">
         <div class="mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
                 <h4 class="mdl-card__title-text">
-                    {{product.name}}
+                    {{item.name}}
                 </h4>
             </div>
             <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                   href="{{url_for('view_category', category_id=product.category_id)}}">
-                    Category Name: {{product.category.name}}
+                   href="{{url_for('view_category', category_id=item.category_id)}}">
+                    Category Name: {{item.category.name}}
                 </a>
             </div>
             <div class="mdl-card__supporting-text">
-                {{product.short_description}}
+                {{item.short_description}}
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                    href="{{url_for('view_product', product_id=product.id)}}">
+                    href="{{url_for('view_item', item_id=item.id)}}">
                 View
                 </a>
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">

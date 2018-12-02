@@ -9,11 +9,11 @@
                    size='30'
                    name='name'
                    class="mdl-card__title mdl-cell--middle"
-                   placeholder='{{product.name}}'
+                   placeholder='{{item.name}}'
             >
             <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
                 <h4>
-                    Category Name: {{product.category.name}}
+                    Category Name: {{item.category.name}}
                 </h4>
             </div>
             <textarea rows='20'
@@ -21,7 +21,7 @@
                       name='description'
                       class="mdl-card__supporting-text mdl-cell--middle"
             >
-                {{product.description}}
+                {{item.description}}
             </textarea>
             <div class="mdl-card__actions mdl-card--border">
                 <input type='submit'

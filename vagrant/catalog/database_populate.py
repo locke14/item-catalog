@@ -1,19 +1,19 @@
 #!/usr/bin/python3
 
 ###############################################################################
-# Product Catalog Database Populate
+# Item Catalog Database Populate
 ###############################################################################
 
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Product
+from database_setup import Base, Category, Item
 from loremipsum import get_sentences
 
 ###############################################################################
 
 
-engine = create_engine('sqlite:///productcatalog.db')
+engine = create_engine('sqlite:///itemcatalog.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -23,17 +23,17 @@ session = DBSession()
 
 
 CATEGORY_NAME = 'Category {}'
-PRODUCT_NAME = 'Product {} of Category {}'
+ITEM_NAME = 'Item {} of Category {}'
 
 NUM_CATEGORIES = 5
-NUM_PRODUCTS_PER_CATEGORY = 3
-PRODUCT_DESCRIPTION_NUM_SENTENCES = 50
+NUM_ITEMS_PER_CATEGORY = 3
+ITEM_DESCRIPTION_NUM_SENTENCES = 50
 
 ###############################################################################
 
 
 def clear_db():
-    session.query(Product).delete()
+    session.query(Item).delete()
     session.query(Category).delete()
     session.commit()
 
@@ -47,13 +47,13 @@ def populate_db():
         session.add(category)
         session.commit()
 
-        for p in range(NUM_PRODUCTS_PER_CATEGORY):
-            name = PRODUCT_NAME.format(p + 1, c + 1)
-            description = get_sentences(PRODUCT_DESCRIPTION_NUM_SENTENCES)
-            product = Product(name=name,
-                              description='. '.join(description),
-                              category=category)
-            session.add(product)
+        for p in range(NUM_ITEMS_PER_CATEGORY):
+            name = ITEM_NAME.format(p + 1, c + 1)
+            description = get_sentences(ITEM_DESCRIPTION_NUM_SENTENCES)
+            item = Item(name=name,
+                        description='. '.join(description),
+                        category=category)
+            session.add(item)
             session.commit()
 
 ###############################################################################
