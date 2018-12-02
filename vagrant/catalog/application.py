@@ -4,7 +4,7 @@
 # Product Catalog Application
 ###############################################################################
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, request, render_template, url_for, redirect
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Product
@@ -13,7 +13,7 @@ from database_setup import Base, Category, Product
 
 
 app = Flask(__name__)
-engine = create_engine('sqlite:///productcatalog.db')
+engine = create_engine('sqlite:///productcatalog.db?check_same_thread=False')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -45,6 +45,20 @@ def all_products():
 def view_product(product_id):
     product = session.query(Product).filter_by(id=product_id).one()
     return render_template('view_product.html', product=product)
+
+###############################################################################
+
+
+@app.route('/products/<int:product_id>/edit/', methods=['GET', 'POST'])
+def edit_product(product_id):
+    product = session.query(Product).filter_by(id=product_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            product.name = request.form['name']
+            return redirect(url_for('view_product', product_id=product_id))
+    else:
+        return render_template('edit_product.html', product=product)
+
 
 ###############################################################################
 

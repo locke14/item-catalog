@@ -25,9 +25,9 @@ session = DBSession()
 CATEGORY_NAME = 'Category {}'
 PRODUCT_NAME = 'Product {} of Category {}'
 
-NUM_CATEGORIES = 10
-NUM_PRODUCTS_PER_CATEGORY = 25
-PRODUCT_DESCRIPTION_NUM_SENTENCES = 5
+NUM_CATEGORIES = 5
+NUM_PRODUCTS_PER_CATEGORY = 3
+PRODUCT_DESCRIPTION_NUM_SENTENCES = 50
 
 ###############################################################################
 

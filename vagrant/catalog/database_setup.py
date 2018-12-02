@@ -36,9 +36,13 @@ class Product(Base):
 
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
-    description = Column(String(250))
+    description = Column(String(1000))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+
+    @property
+    def short_description(self):
+        return self.description[:100] + '...'
 
     @property
     def serialize(self):

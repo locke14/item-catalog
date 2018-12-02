@@ -18,11 +18,11 @@
             <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
                    href="{{url_for('view_category', category_id=product.category_id)}}">
-                    Category: {{product.category_id}}
+                    Category Name: {{product.category.name}}
                 </a>
             </div>
             <div class="mdl-card__supporting-text">
-                {{product.description}}
+                {{product.short_description}}
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
