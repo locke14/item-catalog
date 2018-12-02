@@ -66,6 +66,22 @@ def edit_item(item_id):
     else:
         return render_template('edit_item.html', item=item)
 
+###############################################################################
+
+
+@app.route('/items/<int:item_id>/delete/', methods=['GET', 'POST'])
+def delete_item(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    category_id = item.category_id
+
+    if request.method == 'POST':
+        session.delete(item)
+        session.commit()
+
+        return redirect(url_for('view_category',
+                                category_id=category_id))
+    else:
+        return render_template('delete_item.html', item=item)
 
 ###############################################################################
 
@@ -83,7 +99,8 @@ def view_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
     return render_template('view_category.html',
-                           category_name=category.name, items=items)
+                           category_name=category.name,
+                           items=items)
 
 ###############################################################################
 # API End points

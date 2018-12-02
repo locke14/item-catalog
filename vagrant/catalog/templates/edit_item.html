@@ -34,7 +34,8 @@
                 <input type='reset'
                    value='Reset'
                    class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
-                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+                   href="{{url_for('delete_item', item_id=item.id)}}">
                     <i class="material-icons">delete</i>
                     Delete
                 </a>
