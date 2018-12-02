@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="#" method='post'>
+    <div class="mdl-grid">
+        <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--middle">
+                <input class="mdl-textfield__input"
+                       type="text"
+                       name="name"
+                       id="add-item-name">
+                <label class="mdl-textfield__label"
+                       for="add-item-name">Item Name
+                </label>
+            </div>
+            <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="{{url_for('view_category', category_id=category.id)}}">
+                    Category Name: {{category.name}}
+                </a>
+            </div>
+            <textarea rows='20'
+                      cols='80'
+                      name='description'
+                      style="margin:30px;"
+                      class="mdl-card__supporting-text mdl-cell--middle">Item Description
+            </textarea>
+            <div class="mdl-card__actions mdl-card--border">
+                <input type='submit'
+                   value='Add'
+                   class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                <input type='reset'
+                   value='Reset'
+                   class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

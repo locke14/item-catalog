@@ -26,7 +26,7 @@ session = DBSession()
 
 @app.route('/')
 def home():
-    items = session.query(Item).all()
+    items = session.query(Item).order_by(Item.id.desc()).all()
     return render_template('all_items.html', items=items)
 
 ###############################################################################
@@ -34,7 +34,7 @@ def home():
 
 @app.route('/items/')
 def all_items():
-    items = session.query(Item).all()
+    items = session.query(Item).order_by(Item.id.desc()).all()
     return render_template('all_items.html', items=items)
 
 
@@ -45,6 +45,24 @@ def all_items():
 def view_item(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('view_item.html', item=item)
+
+###############################################################################
+
+
+@app.route('/items/add/', methods=['GET', 'POST'])
+def add_item():
+    categories = session.query(Category).order_by(Category.id.desc()).all()
+    if request.method == 'POST':
+        item = Item(name=request.form['name'],
+                    description=request.form['description'],
+                    category_id=request.form['category_id'])
+
+        session.add(item)
+        session.commit()
+
+        return redirect(url_for('view_item', item_id=item.id))
+    else:
+        return render_template('add_item.html', categories=categories)
 
 ###############################################################################
 
@@ -88,7 +106,7 @@ def delete_item(item_id):
 
 @app.route('/categories/')
 def all_categories():
-    categories = session.query(Category).all()
+    categories = session.query(Category).order_by(Category.id.desc()).all()
     return render_template('all_categories.html', categories=categories)
 
 ###############################################################################
@@ -99,8 +117,40 @@ def view_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
     return render_template('view_category.html',
-                           category_name=category.name,
+                           category=category,
                            items=items)
+
+###############################################################################
+
+
+@app.route('/categories/add/', methods=['GET', 'POST'])
+def add_category():
+    if request.method == 'POST':
+        category = Category(name=request.form['name'])
+        session.add(category)
+        session.commit()
+
+        return redirect(url_for('view_category', category_id=category.id))
+    else:
+        return render_template('add_category.html')
+
+###############################################################################
+
+
+@app.route('/categories/<int:category_id>/add/', methods=['GET', 'POST'])
+def add_category_item(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        item = Item(name=request.form['name'],
+                    description=request.form['description'],
+                    category_id=category_id)
+
+        session.add(item)
+        session.commit()
+
+        return redirect(url_for('view_item', item_id=item.id))
+    else:
+        return render_template('add_category_item.html', category=category)
 
 ###############################################################################
 # API End points

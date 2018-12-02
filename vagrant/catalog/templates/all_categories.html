@@ -14,7 +14,8 @@
             Number of Categories: {{categories|length}}
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('add_category')}}">
                 <i class="material-icons">add</i>
                 Add a New Category
             </a>
@@ -38,7 +39,8 @@
                     <i class="material-icons">list</i>
                     Show All Items
                 </a>
-                <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent">
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent"
+                   href="{{url_for('add_category_item', category_id=category.id)}}">
                     <i class="material-icons">add</i>
                     Add an Item
                 </a>

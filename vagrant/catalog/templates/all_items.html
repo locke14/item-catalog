@@ -14,7 +14,8 @@
             Number of Items: {{items|length}}
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('add_item')}}">
                 <i class="material-icons">add</i>
                 Add a New Item
             </a>
@@ -41,7 +42,7 @@
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
                     href="{{url_for('view_item', item_id=item.id)}}">
-                    <i class="material-icons">details</i>
+                    <i class="material-icons">pageview</i>
                     View
                 </a>
                 <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
