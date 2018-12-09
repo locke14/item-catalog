@@ -40,7 +40,7 @@ session = DBSession()
 
 
 @app.route('/login')
-def show_login():
+def login():
     state = ''.join(random.choice(string.ascii_uppercase +
                                   string.digits) for _ in range(32))
     login_session['state'] = state
@@ -137,7 +137,7 @@ def gconnect():
 ###############################################################################
 
 
-@app.route('/gdisconnect')
+@app.route('/logout')
 def gdisconnect():
     access_token = login_session.get('access_token')
     if access_token is None:
@@ -197,6 +197,9 @@ def view_item(item_id):
 
 @app.route('/items/add/', methods=['GET', 'POST'])
 def add_item():
+    if 'username' not in login_session:
+        return redirect('/login')
+
     categories = session.query(Category).order_by(Category.id.desc()).all()
     if request.method == 'POST':
         item = Item(name=request.form['name'],
@@ -215,6 +218,9 @@ def add_item():
 
 @app.route('/items/<int:item_id>/edit/', methods=['GET', 'POST'])
 def edit_item(item_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+
     item = session.query(Item).filter_by(id=item_id).one()
 
     if request.method == 'POST':
@@ -235,6 +241,9 @@ def edit_item(item_id):
 
 @app.route('/items/<int:item_id>/delete/', methods=['GET', 'POST'])
 def delete_item(item_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+
     item = session.query(Item).filter_by(id=item_id).one()
     category_id = item.category_id
 
@@ -271,6 +280,9 @@ def view_category(category_id):
 
 @app.route('/categories/add/', methods=['GET', 'POST'])
 def add_category():
+    if 'username' not in login_session:
+        return redirect('/login')
+
     if request.method == 'POST':
         category = Category(name=request.form['name'])
         session.add(category)
@@ -285,6 +297,9 @@ def add_category():
 
 @app.route('/categories/<int:category_id>/add/', methods=['GET', 'POST'])
 def add_category_item(category_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+
     category = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         item = Item(name=request.form['name'],
