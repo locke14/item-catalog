@@ -3,61 +3,63 @@
 {% block content %}
 
 <div class="mdl-grid">
-
-    <div class="mdl-card mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--2-col mdl-shadow--2dp">
         <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
             <div class="mdl-card__title-text">
-                All Items
+                All Categories
             </div>
         </div>
-        <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
-            Number of Items: {{items|length}}
+        <div class="mdl-card__supporting-text mdl-card--expand mdl-cell--middle">
+            <ul class="mdl-list">
+                {% for category in categories %}
+                    <li class="mdl-list__item">
+                        <a class="mdl-list__item-primary-content"
+                           href="{{url_for('view_category', category_id=category.id)}}">
+                            {{category.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+            <a class="mdl-button mdl-button--primary mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('add_category')}}">
                 <i class="material-icons">add</i>
-                Add a New Item
+                Add New
             </a>
         </div>
     </div>
-
-    {% for item in items %}
-
-        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
-                <div class="mdl-card__title-text">
-                    {{item.name}}
-                </div>
-            </div>
-            <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                   href="{{url_for('view_category', category_id=item.category_id)}}">
-                    Category Name: {{item.category.name}}
-                </a>
-            </div>
-            <div class="mdl-card__supporting-text">
-                {{item.short_description}}
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
-                    href="{{url_for('view_item', item_id=item.id)}}">
-                    <i class="material-icons">pageview</i>
-                    View
-                </a>
-                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
-                   href="{{url_for('edit_item', item_id=item.id)}}">
-                    <i class="material-icons">edit</i>
-                    Edit
-                </a>
-                <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
-                   href="{{url_for('delete_item', item_id=item.id)}}">
-                    <i class="material-icons">delete</i>
-                    Delete
-                </a>
+    <div class="mdl-card mdl-cell mdl-cell--10-col mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
+            <div class="mdl-card__title-text">
+                Latest Items
             </div>
         </div>
-
-    {% endfor %}
+        <div class="mdl-card__supporting-text">
+            <ul class="mdl-list">
+                {% for item in items %}
+                    <li class="mdl-list__item">
+                        <a class="mdl-list__item-primary-content"
+                           href="{{url_for('view_item', item_id=item.id)}}">
+                            {{item.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--primary mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('add_item')}}">
+                <i class="material-icons">add</i>
+                Add New
+            </a>
+            <a class="mdl-button mdl-button--primary mdl-js-button mdl-js-ripple-effect"
+               href="{{url_for('all_items')}}">
+                <i class="material-icons">list</i>
+                Show All Items
+            </a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

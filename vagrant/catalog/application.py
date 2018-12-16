@@ -207,7 +207,8 @@ def gdisconnect():
 @app.route('/')
 def home():
     items = session.query(Item).order_by(Item.id.desc()).all()
-    return render_template('all_items.html', items=items)
+    categories = session.query(Category).order_by(Category.id.desc()).all()
+    return render_template('home.html', categories=categories, items=items[:10])
 
 ###############################################################################
 
