@@ -7,7 +7,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 from loremipsum import get_sentences
 
 ###############################################################################
@@ -42,6 +42,12 @@ def clear_db():
 
 def populate_db():
 
+    default_user = User(name="Default User",
+                        email="default@user.com",
+                        picture='https://cdn.stocksnap.io/img-thumbs/960w/B3QV6RMDVT.jpg')
+    session.add(default_user)
+    session.commit()
+
     for c in range(NUM_CATEGORIES):
         category = Category(name=CATEGORY_NAME.format(c + 1))
         session.add(category)
@@ -52,7 +58,9 @@ def populate_db():
             description = get_sentences(ITEM_DESCRIPTION_NUM_SENTENCES)
             item = Item(name=name,
                         description='. '.join(description),
-                        category=category)
+                        category=category,
+                        user=default_user)
+
             session.add(item)
             session.commit()
 

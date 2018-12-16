@@ -10,7 +10,7 @@ import random
 import string
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -122,6 +122,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # see if user exists, if not make a new one
+    user_id = get_user_id(data["email"])
+    if not user_id:
+        user_id = create_user()
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -133,6 +139,35 @@ def gconnect():
     flash("you are now logged in as {:s}".format(login_session['username']))
     print("done!")
     return output
+
+###############################################################################
+
+
+def create_user():
+    new_user = User(name=login_session['username'],
+                    email=login_session['email'],
+                    picture=login_session['picture'])
+    session.add(new_user)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+###############################################################################
+
+
+def get_user_info(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+###############################################################################
+
+
+def get_user_id(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 ###############################################################################
 
@@ -151,8 +186,7 @@ def gdisconnect():
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    print('result is ')
-    print(result)
+
     if result['status'] == '200':
         del login_session['access_token']
         del login_session['gplus_id']
@@ -181,8 +215,10 @@ def home():
 @app.route('/items/')
 def all_items():
     items = session.query(Item).order_by(Item.id.desc()).all()
-    return render_template('all_items.html', items=items)
-
+    if 'username' not in login_session:
+        return render_template('all_items.html', items=items)
+    else:
+        return render_template('all_items.html', items=items)
 
 ###############################################################################
 
@@ -204,7 +240,8 @@ def add_item():
     if request.method == 'POST':
         item = Item(name=request.form['name'],
                     description=request.form['description'],
-                    category_id=request.form['category_id'])
+                    category_id=request.form['category_id'],
+                    user_id=login_session['user_id'])
 
         session.add(item)
         session.commit()
@@ -222,6 +259,12 @@ def edit_item(item_id):
         return redirect('/login')
 
     item = session.query(Item).filter_by(id=item_id).one()
+
+    if item.user_id != login_session['user_id']:
+        return "<script>function myFunction() " \
+               "{alert('You are not authorized to edit this item. " \
+               "Please create your own item in order to edit.');}" \
+               "</script><body onload='myFunction()''>"
 
     if request.method == 'POST':
         if request.form['name']:
@@ -246,6 +289,12 @@ def delete_item(item_id):
 
     item = session.query(Item).filter_by(id=item_id).one()
     category_id = item.category_id
+
+    if item.user_id != login_session['user_id']:
+        return "<script>function myFunction() " \
+               "{alert('You are not authorized to delete this item. " \
+               "Please create your own item in order to delete.');}" \
+               "</script><body onload='myFunction()''>"
 
     if request.method == 'POST':
         session.delete(item)

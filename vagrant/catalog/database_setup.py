@@ -15,6 +15,17 @@ Base = declarative_base()
 ###############################################################################
 
 
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
+
+###############################################################################
+
+
 class Category(Base):
     __tablename__ = 'category'
 
@@ -39,6 +50,8 @@ class Item(Base):
     description = Column(String(1000))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def short_description(self):
@@ -50,7 +63,8 @@ class Item(Base):
             'name': self.name,
             'description': self.description,
             'id': self.id,
-            'category_id': self.category_id,
+            'category_name': self.category.name,
+            'user_name': self.user.name,
         }
 
 ###############################################################################
