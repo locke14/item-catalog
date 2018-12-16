@@ -7,7 +7,7 @@
     <div class="mdl-card mdl-cell mdl-cell--12-col mdl-shadow--2dp">
         <div class="mdl-card__title mdl-card--expand mdl-cell--middle">
             <div class="mdl-card__title-text">
-                All Items of {{category.name}}
+                Category: {{category.name}}
             </div>
         </div>
         <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
@@ -32,6 +32,13 @@
             </div>
             <div class="mdl-card__supporting-text">
                 {{item.short_description}}
+            </div>
+            <div class="mdl-card__media mdl-card--expand mdl-cell--middle">
+                <img src="{{item.image_url}}"
+                     height="150"
+                     border="0"
+                     alt=""
+                     style="padding:0px;">
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"

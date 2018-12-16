@@ -33,11 +33,18 @@
             <div class="mdl-card__subtitle-text mdl-card--expand mdl-cell--middle">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
                    href="{{url_for('view_category', category_id=item.category_id)}}">
-                    Category Name: {{item.category.name}}
+                    Category: {{item.category.name}}
                 </a>
             </div>
             <div class="mdl-card__supporting-text">
                 {{item.short_description}}
+            </div>
+            <div class="mdl-card__media mdl-card--expand mdl-cell--middle">
+                <img src="{{item.image_url}}"
+                     height="150"
+                     border="0"
+                     alt=""
+                     style="padding:0px;">
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"

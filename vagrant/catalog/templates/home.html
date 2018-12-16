@@ -41,7 +41,7 @@
                     <li class="mdl-list__item">
                         <a class="mdl-list__item-primary-content"
                            href="{{url_for('view_item', item_id=item.id)}}">
-                            {{item.name}}
+                            {{item.name}} ({{item.category.name}})
                         </a>
                     </li>
                 {% endfor %}

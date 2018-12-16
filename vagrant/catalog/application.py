@@ -26,7 +26,7 @@ app = Flask(__name__)
 
 CLIENT_ID = json.loads(open('client_secrets.json',
                             'r').read())['web']['client_id']
-APPLICATION_NAME = "Item Catalog"
+APPLICATION_NAME = "Food Item Catalog"
 
 engine = create_engine('sqlite:///itemcatalog.db?check_same_thread=False')
 Base.metadata.bind = engine
@@ -173,7 +173,7 @@ def get_user_id(email):
 
 
 @app.route('/logout')
-def gdisconnect():
+def logout():
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
@@ -193,6 +193,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -204,11 +205,20 @@ def gdisconnect():
 ###############################################################################
 
 
+def is_logged_in():
+    return 'username' in login_session
+
+###############################################################################
+
+
 @app.route('/')
 def home():
     items = session.query(Item).order_by(Item.id.desc()).all()
     categories = session.query(Category).order_by(Category.id.desc()).all()
-    return render_template('home.html', categories=categories, items=items[:10])
+    return render_template('home.html',
+                           is_logged_in=is_logged_in(),
+                           categories=categories,
+                           items=items[:10])
 
 ###############################################################################
 
@@ -217,9 +227,13 @@ def home():
 def all_items():
     items = session.query(Item).order_by(Item.id.desc()).all()
     if 'username' not in login_session:
-        return render_template('all_items.html', items=items)
+        return render_template('all_items.html',
+                               is_logged_in=is_logged_in(),
+                               items=items)
     else:
-        return render_template('all_items.html', items=items)
+        return render_template('all_items.html',
+                               is_logged_in=is_logged_in(),
+                               items=items)
 
 ###############################################################################
 
@@ -227,7 +241,9 @@ def all_items():
 @app.route('/items/<int:item_id>/')
 def view_item(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
-    return render_template('view_item.html', item=item)
+    return render_template('view_item.html',
+                           is_logged_in=is_logged_in(),
+                           item=item)
 
 ###############################################################################
 
@@ -240,6 +256,7 @@ def add_item():
     categories = session.query(Category).order_by(Category.id.desc()).all()
     if request.method == 'POST':
         item = Item(name=request.form['name'],
+                    image_url=request.form['image_url'],
                     description=request.form['description'],
                     category_id=request.form['category_id'],
                     user_id=login_session['user_id'])
@@ -247,9 +264,13 @@ def add_item():
         session.add(item)
         session.commit()
 
-        return redirect(url_for('view_item', item_id=item.id))
+        return redirect(url_for('view_item',
+                                is_logged_in=is_logged_in(),
+                                item_id=item.id))
     else:
-        return render_template('add_item.html', categories=categories)
+        return render_template('add_item.html',
+                               is_logged_in=is_logged_in(),
+                               categories=categories)
 
 ###############################################################################
 
@@ -270,15 +291,21 @@ def edit_item(item_id):
     if request.method == 'POST':
         if request.form['name']:
             item.name = request.form['name']
+        if request.form['image_url']:
+            item.image_url = request.form['image_url']
         if request.form['description']:
             item.description = request.form['description']
 
         session.add(item)
         session.commit()
 
-        return redirect(url_for('view_item', item_id=item_id))
+        return redirect(url_for('view_item',
+                                is_logged_in=is_logged_in(),
+                                item_id=item_id))
     else:
-        return render_template('edit_item.html', item=item)
+        return render_template('edit_item.html',
+                               is_logged_in=is_logged_in(),
+                               item=item)
 
 ###############################################################################
 
@@ -302,9 +329,12 @@ def delete_item(item_id):
         session.commit()
 
         return redirect(url_for('view_category',
+                                is_logged_in=is_logged_in(),
                                 category_id=category_id))
     else:
-        return render_template('delete_item.html', item=item)
+        return render_template('delete_item.html',
+                               is_logged_in=is_logged_in(),
+                               item=item)
 
 ###############################################################################
 
@@ -312,7 +342,9 @@ def delete_item(item_id):
 @app.route('/categories/')
 def all_categories():
     categories = session.query(Category).order_by(Category.id.desc()).all()
-    return render_template('all_categories.html', categories=categories)
+    return render_template('all_categories.html',
+                           is_logged_in=is_logged_in(),
+                           categories=categories)
 
 ###############################################################################
 
@@ -322,6 +354,7 @@ def view_category(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
     return render_template('view_category.html',
+                           is_logged_in=is_logged_in(),
                            category=category,
                            items=items)
 
@@ -338,9 +371,12 @@ def add_category():
         session.add(category)
         session.commit()
 
-        return redirect(url_for('view_category', category_id=category.id))
+        return redirect(url_for('view_category',
+                                is_logged_in=is_logged_in(),
+                                category_id=category.id))
     else:
-        return render_template('add_category.html')
+        return render_template('add_category.html',
+                               is_logged_in=is_logged_in())
 
 ###############################################################################
 
@@ -353,15 +389,21 @@ def add_category_item(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         item = Item(name=request.form['name'],
+                    image_url=request.form['image_url'],
                     description=request.form['description'],
+                    user_id=login_session['user_id'],
                     category_id=category_id)
 
         session.add(item)
         session.commit()
 
-        return redirect(url_for('view_item', item_id=item.id))
+        return redirect(url_for('view_item',
+                                is_logged_in=is_logged_in(),
+                                item_id=item.id))
     else:
-        return render_template('add_category_item.html', category=category)
+        return render_template('add_category_item.html',
+                               is_logged_in=is_logged_in(),
+                               category=category)
 
 ###############################################################################
 # API End points

@@ -22,23 +22,31 @@
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
           <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
-              <span class="mdl-layout-title">Item Catalog</span>
+              <span class="mdl-layout-title">Food Item Catalog</span>
               <div class="mdl-layout-spacer"></div>
               <nav class="mdl-navigation mdl-layout--large-screen-only">
                 <a class="mdl-navigation__link" href="{{url_for('home')}}">Home</a>
                 <a class="mdl-navigation__link" href="{{url_for('all_items')}}">Items</a>
                 <a class="mdl-navigation__link" href="{{url_for('all_categories')}}">Categories</a>
-                <a class="mdl-navigation__link" href="{{url_for('login')}}">Login</a>
+                  {% if is_logged_in %}
+                    <a class="mdl-navigation__link" href="{{url_for('logout')}}">Logout</a>
+                  {% else %}
+                    <a class="mdl-navigation__link" href="{{url_for('login')}}">Login</a>
+                  {% endif %}
               </nav>
             </div>
           </header>
           <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Item Catalog</span>
+            <span class="mdl-layout-title">Food Item Catalog</span>
             <nav class="mdl-navigation">
               <a class="mdl-navigation__link" href="{{url_for('home')}}">Home</a>
               <a class="mdl-navigation__link" href="{{url_for('all_items')}}">Items</a>
               <a class="mdl-navigation__link" href="{{url_for('all_categories')}}">Categories</a>
-              <a class="mdl-navigation__link" href="{{url_for('login')}}">Login</a>
+              {% if is_logged_in %}
+                <a class="mdl-navigation__link" href="{{url_for('logout')}}">Logout</a>
+              {% else %}
+                <a class="mdl-navigation__link" href="{{url_for('login')}}">Login</a>
+              {% endif %}
             </nav>
           </div>
           <main class="mdl-layout__content">
@@ -48,7 +56,7 @@
           </main>
           <footer class="mdl-mini-footer">
               <div class="mdl-mini-footer__left-section">
-                <div class="mdl-logo">Item Catalog</div>
+                <div class="mdl-logo">Food Item Catalog</div>
                 <ul class="mdl-mini-footer__link-list">
                   <li><a href="#">About</a></li>
                   <li><a href="#">Help</a></li>

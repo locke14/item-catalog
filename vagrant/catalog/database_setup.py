@@ -48,6 +48,7 @@ class Item(Base):
     name = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(1000))
+    image_url = Column(String(512))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -62,6 +63,7 @@ class Item(Base):
         return {
             'name': self.name,
             'description': self.description,
+            'image_url': self.image_url,
             'id': self.id,
             'category_name': self.category.name,
             'user_name': self.user.name,
