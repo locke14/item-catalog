@@ -215,6 +215,10 @@ def is_logged_in():
 def home():
     items = session.query(Item).order_by(Item.id.desc()).all()
     categories = session.query(Category).order_by(Category.id.desc()).all()
+    for category in categories:
+        category_items = session.query(Item).filter_by(category_id=category.id).all()
+        category.count = len(category_items)
+
     return render_template('home.html',
                            is_logged_in=is_logged_in(),
                            categories=categories,
