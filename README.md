@@ -8,7 +8,7 @@ How to run the application?
 - Install Vagrant and VirtualBox
 - Launch the Vagrant VM (`vagrant up`)
 - Go to the project directory (`cd /vagrant/catalog`)
-- Install the python dependencies (`sudo pip3 install -r requirements.txt')
+- Install the python dependencies (`sudo pip3 install -r requirements.txt`)
 - Create `client_secrets.json` and copy the file contents sent on project submission
 - Setup the database (`python3 database_setup.py`)
 - Populate the database (`python3 database_populate.py`)
