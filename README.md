@@ -8,15 +8,12 @@ How to run the application?
 - Install Vagrant and VirtualBox
 - Launch the Vagrant VM (`vagrant up`)
 - Go to the project directory (`cd /vagrant/catalog`)
+- Install the python dependencies (`sudo pip3 install -r requirements.txt')
+- Create `client_secrets.json` and copy the file contents sent on project submission
 - Setup the database (`python3 database_setup.py`)
 - Populate the database (`python3 database_populate.py`)
 - Run the application within the VM (`python3 application.py`)
-- Access the application by visiting http://localhost:8000 locally
-
-Note on Google Sign-in
-----------------------
-- The `client_secrets.json` file for the Google Sign-In is not on this public git repository
-- In order to make it work, please create your own app and place the `clients_secrets.json` file in the directory and update the `data-clientid` in `templates/login.html` (line 17) with your id
+- Access the application by visiting http://localhost:8000 locally 
 
 Screenshots
 -----------
