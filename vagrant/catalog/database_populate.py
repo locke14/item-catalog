@@ -13,7 +13,7 @@ from loremipsum import get_sentences
 ###############################################################################
 
 
-engine = create_engine('sqlite:///itemcatalog.db')
+engine = create_engine('postgresql://catalog:arkantos@localhost:5432/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

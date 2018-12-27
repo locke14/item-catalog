@@ -28,7 +28,7 @@ CLIENT_ID = json.loads(open('client_secrets.json',
                             'r').read())['web']['client_id']
 APPLICATION_NAME = "Food Item Catalog"
 
-engine = create_engine('sqlite:///itemcatalog.db?check_same_thread=False')
+engine = create_engine('postgresql://catalog:arkantos@localhost:5432/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

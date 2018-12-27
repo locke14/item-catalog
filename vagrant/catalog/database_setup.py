@@ -72,5 +72,5 @@ class Item(Base):
 ###############################################################################
 
 
-engine = create_engine('sqlite:///itemcatalog.db')
+engine = create_engine('postgresql://catalog:arkantos@localhost:5432/catalog')
 Base.metadata.create_all(engine)
